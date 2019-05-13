@@ -5,10 +5,10 @@ rhsvec = zeros(np+1,1);
 
 psiFS = transpose(ys)*cos(alpha)-transpose(xs)*sin(alpha);
 
-rhsvec(1) = 0;
+rhsvec(np) = 0;
 rhsvec(np+1) = 0;
 
-for i=2:np
+for i=1:np-1
     
     rhsvec(i) = psiFS(i)-psiFS(i+1);
     

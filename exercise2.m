@@ -28,9 +28,10 @@ end
 figure(1)
 c = -0.15 : 0.05 : 0.15;
 contour(xm,ym,infa,c)
+title('Infa Exact');ylabel('y coordinate');xlabel('x coordinate');
 figure(2)
 contour(xm,ym,infb,c)
-
+title('Infb Exact');ylabel('y coordinate');xlabel('x coordinate');
 
 %Plot of the approximate influence coefficients
 
@@ -76,5 +77,8 @@ end
 figure(3)
 c = -0.15 : 0.05 : 0.15;
 contour(xm,ym,infaapprox,c)
+title('Infa Approximate');ylabel('y coordinate');xlabel('x coordinate');
 figure(4)
 contour(xm,ym,infbapprox,c)
+title('Infb Approximate');ylabel('y coordinate');xlabel('x coordinate');
+

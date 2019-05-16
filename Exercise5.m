@@ -16,6 +16,7 @@ gamma0 = A0\b0;
 
 figure(10)
 plot(theta/pi, gamma0)
+title('Surface velocity for alpha = 0');ylabel('Surface velocity');xlabel('Theta/pi');
 axis([0 2 -2.5 2.5])
 
 alpha=0.1;
@@ -25,6 +26,7 @@ gamma1 = A1\b1;
 
 figure(11)
 plot(theta/pi, gamma1)
+title('Surface velocity for alpha = 0.1');ylabel('Surface velocity');xlabel('Theta/pi');
 axis([0 2 -2.5 2.5])
 
 Circ0 = sum(gamma0)*theta(2)

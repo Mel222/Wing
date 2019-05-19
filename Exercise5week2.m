@@ -4,7 +4,7 @@ close all
 global Re ue0 duedx
 Re=1e7;
 ue0=1;  %free stream velocity
-duedx=-0.9
+duedx=-0.6
 
 
 %Definition of the initial value of theta and deltaE
@@ -22,7 +22,6 @@ HE=thickhist(:,2)./thickhist(:,1);
 
 seplocation=0
 i=1;
- 
 
  while i<length(HE) && seplocation==0
     if HE(i)<=1.46

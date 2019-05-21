@@ -3,8 +3,8 @@
 close all
 clear
 
-% ReL = [1e05, 1e04, 1e03]; %% three dif 
-ReL = linspace(1.78e06, 1.8e06, 1000); 
+ReL = [1e05, 1e04, 1e03]; %% three dif 
+% ReL = linspace(1.78e06, 1.8e06, 1000); 
 x = linspace(0,1,101);
 
 uegrad = -0.5;

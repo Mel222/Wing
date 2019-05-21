@@ -12,7 +12,7 @@ ue = zeros(1,length(x));
 ue(1) = 1;
 
 He=zeros(1,lentgh(x));
-He(0)=1.57258; %an arbitrary value is assined to He at point x=0
+He(1)=1.57258; %an arbitrary value is assined to He at point x=0
 Theta=zeros(1,length(x))
 
 for i = 2:length(x)
@@ -30,6 +30,7 @@ its = zeros(1,length(ReL)); %location of turbulent separation
 Supplant = true;
 
 %laminar loop
+
 
 for r = 1:length(ReL)
         
@@ -75,18 +76,17 @@ for r = 1:length(ReL)
     elseif ils(r)~= 0
 %         disp(['Laminar separation at ' num2str(ils(r)) ' with Rethet ' num2str(Rethet)])
     end    
-end 
+
 
 %step (iii)
-for r=1:3
-    if int(r)~=0;  %ie natural transition occured
-       deltaE=He(int(r))*Theta(int(r)); %deltaE is computed where transition occured
-    elseif ils(r)~=0; %ie laminar separtion occured
-        deltaE=He(int(r))*Theta(int(r));
-    elseif
-        deltaE=He(length(x))*Theta(length(x));
+    if int(r)~=0  %ie natural transition occured
+       deltaE(r)=He(int(r))*Theta(int(r)); %deltaE is computed where transition occured
+    elseif ils(r)~=0 %ie laminar separtion occured
+        deltaE(r)=He(int(r))*Theta(int(r));
+    else
+        deltaE(r)=He(length(x))*Theta(length(x));
     end
-end 
+end
 
 
 %while loop for the turbulent boundary layer

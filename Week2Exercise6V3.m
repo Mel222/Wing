@@ -8,7 +8,7 @@ global Re ue0 duedx
 ReL = 1e5; 
 x = linspace(0,1,101);
 
-uegrad= linspace(-0.38125,-0.37773,5);
+uegrad= linspace(-0.383,-0.38,20);
 for u = 1:length(uegrad)
 duedx = uegrad(u);
 ue = zeros(1,length(x));
@@ -84,7 +84,7 @@ end
     elseif ils~=0 %ie laminar separtion occured
         deltaE=He(ils)*Theta(ils);
     else
-        deltaE=He(i-1)*Theta(i-1);
+        deltaE=He(i)*Theta(i);
     end
 
 
@@ -97,7 +97,7 @@ thick0(2) = deltaE;
 while i<length(x) && its==0
     i = i+1;
     Re = ReL;
-    ue0 = ue(i);
+    ue0 = ue(i-1);
     
     [delx, thickhist] = ode45(@thickdash,[0,x(i) - x(i-1)],thick0);
         
@@ -109,11 +109,11 @@ while i<length(x) && its==0
      Theta(i) = thick0(1);
      He(i) = HE;
      
-     if HE <= 1.46
+     if HE < 1.46
          its = i;
          disp(['Turbulent separation at ' num2str(its) ' with Rethet ' num2str(Rethet) ' with uegrad ' num2str(uegrad(u))])
   
-     elseif ils ~= 0 && HE >= 1.58 && itr == 0 
+     elseif ils ~= 0 && HE > 1.58 && itr == 0 
          itr = i;
          disp(['Turbulent reattachement at ' num2str(itr) ' with Rethet ' num2str(Rethet) ' with uegrad ' num2str(uegrad(u))])
      end

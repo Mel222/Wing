@@ -5,7 +5,7 @@ clear
 
 global Re ue0 duedx
 
-ReL = 1e6; 
+ReL = 1e4; 
 x = linspace(0,1,101);
 
 uegrad= -0.25;
@@ -39,7 +39,6 @@ its = 0; %location of turbulent separation
         
 integral = 0; 
 Mthick = 0;
-
 n = 101;
 laminar = true;
 i = 1;
@@ -75,18 +74,19 @@ end
         disp(['Natural transition at ' num2str(int) ' with Rethet ' num2str(Rethet)]) 
     elseif ils~= 0
         disp(['Laminar separation at ' num2str(ils) ' with Rethet ' num2str(Rethet)])
-    end   
+    end       
 
 %step (iii)
-    if int~=0  %ie natural transition occured
-       deltaE=He(int)*Theta(int); %deltaE is computed where transition occured
-    elseif ils~=0 %ie laminar separtion occured
-        deltaE=He(ils)*Theta(ils);
-    else
-        deltaE=He(i-1)*Theta(i-1);
-    end
+%     if int~=0  %ie natural transition occured
+%        deltaE=He(int)*Theta(int); %deltaE is computed where transition occured
+%     elseif ils~=0 %ie laminar separtion occured
+%         deltaE=He(ils)*Theta(ils);
+%     else
+%         deltaE=He(i)*Theta(i);
+%         disp(['hey' num2str(He(i))])
+%     end
 
-
+deltaE=He(i)*Theta(i);
 
 %while loop for the turbulent boundary layer
 
@@ -96,7 +96,7 @@ thick0(2) = deltaE;
 while i<length(x) && its==0
     i = i+1;
     Re = ReL;
-    ue0 = ue(i);
+    ue0 = ue(i-1);
     
     [delx, thickhist] = ode45(@thickdash,[0,x(i) - x(i-1)],thick0);
         
@@ -108,11 +108,11 @@ while i<length(x) && its==0
      Theta(i) = thick0(1);
      He(i) = HE;
      
-     if HE <= 1.46
+     if HE < 1.46
          its = i;
          disp(['Turbulent separation at ' num2str(its) ' with Rethet ' num2str(Rethet)])
   
-     elseif ils ~= 0 && HE >= 1.58 && itr == 0
+     elseif ils ~= 0 && HE > 1.58 && itr == 0
          itr = i;
          disp(['Turbulent reattachement at ' num2str(itr) ' with Rethet ' num2str(Rethet)])
      end

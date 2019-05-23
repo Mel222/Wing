@@ -15,19 +15,20 @@ thick0(2)=1.80*thick0(1);
 %the differential equation is solved
 
 [delx thickhist]=ode45(@thickdash,[0 0.99], thick0);
+size(thickhist)
 
 x=x0+delx;
 
 HE=thickhist(:,2)./thickhist(:,1);
 
-seplocation=0
+seplocation=0;
 i=1;
 
  while i<length(HE) && seplocation==0
     if HE(i)<=1.46
         seplocation=x(i)
     end
-    i=i+1
+    i=i+1;
  end   
  
 

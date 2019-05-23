@@ -7,8 +7,8 @@ del=sqrt((yb-ya)^2+(xb-xa)^2);
 tx=1/sqrt((xb-xa)^2+(yb-ya)^2)*(xb-xa);
 ty=1/sqrt((xb-xa)^2+(yb-ya)^2)*(yb-ya);
 % unit normal vector to the panel
-nx=1/sqrt((xb-xa)^2+(yb-ya)^2)*(yb-ya);
-ny=1/sqrt((xb-xa)^2+(yb-ya)^2)*(xa-xb);
+nx=1/sqrt((xb-xa)^2+(yb-ya)^2)*(ya-yb);
+ny=1/sqrt((xb-xa)^2+(yb-ya)^2)*(xb-xa);
 
 rx=(x-xa);
 ry=(y-ya);

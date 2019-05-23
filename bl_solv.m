@@ -1,32 +1,13 @@
-%Week 2 Exercise 6
-
-close all
-clear
+function[int, ils, itr, its, delstar, theta] = bl_solv(x,cp)
 
 global Re ue0 duedx
 
-ReL = 1e7; 
-x = linspace(0,1,101);
-
-uegrad= 0;
-duedx = uegrad;
-ue = zeros(1,length(x));
-ue(1) = 1;
-for i = 2:length(x)
-    ue(i) = ue(i-1) + uegrad*x(2);
-end
-
+% ue = (1-cp).^0.5;
+% ue0 = ue(1);
+    
 He=zeros(1,length(x));
 He(1)=1.57258; %an arbitrary value is assined to He at point x=0
 Theta=zeros(1,length(x));
-
-figure 
-plot(x,ue)
-
-% int = zeros(1,length(ReL)); %location of natural transition
-% ils = zeros(1,length(ReL)); %location of natural separation
-% itr = zeros(1,length(ReL)); %location of turbulent reattachement
-% its = zeros(1,length(ReL)); %location of turbulent separation
 
 int = 0; %location of natural transition
 ils = 0;%location of natural separation
@@ -34,24 +15,31 @@ itr = 0; %location of turbulent reattachement
 its = 0; %location of turbulent separation
 
 %laminar loop
-
-
         
 integral = 0; 
 Mthick = 0;
-n = 101;
+n = length(x);
 laminar = true;
 i = 1;
+
 
 while laminar && i < n
     i = i + 1;
     
+    ue(i) = (1-cp(i))^0.5;
+    ue(i-1) = (1-cp(i-1))^0.5;
+%     ue = (1-cp(i))^0.5;
+%     ue0 = (1-cp(1))^0.5;
+    
+    uegrad = (ue(i)-ue(i-1))/(x(i)-x(i-1));
+    duedx = uegrad;
+    
     integral = integral + ueintbit(x(i-1),ue(i-1),x(i),ue(i)); 
-    Mthick = sqrt(0.45*(ue(i)^-6)*integral/ReL);
+    Mthick = sqrt(0.45*(ue(i)^-6)*integral/Re);
     Theta(i)=Mthick;
     
-    Rethet = ReL*ue(i)*Mthick;
-    m = -ReL*(Mthick^2)*uegrad;
+    Rethet = Re*ue(i)*Mthick;
+    m = -Re*(Mthick^2)*uegrad;
 
     H = thwaites_lookup(m);
     HE = laminar_He(H);
@@ -76,16 +64,6 @@ end
         disp(['Laminar separation at ' num2str(ils) ' with Rethet ' num2str(Rethet)])
     end       
 
-%step (iii)
-%     if int~=0  %ie natural transition occured
-%        deltaE=He(int)*Theta(int); %deltaE is computed where transition occured
-%     elseif ils~=0 %ie laminar separtion occured
-%         deltaE=He(ils)*Theta(ils);
-%     else
-%         deltaE=He(i)*Theta(i);
-%         disp(['hey' num2str(He(i))])
-%     end
-
 deltaE=He(i)*Theta(i);
 
 %while loop for the turbulent boundary layer
@@ -95,15 +73,19 @@ thick0(2) = deltaE;
 
 while i<length(x) && its==0
     i = i+1;
-    Re = ReL;
     ue0 = ue(i-1);
+    ue(i) = (1-cp(i))^0.5;
+    ue(i-1) = (1-cp(i-1))^0.5;
+    
+    uegrad = (ue(i)-ue(i-1))/(x(i)-x(i-1));
+    duedx = uegrad;
     
     [delx, thickhist] = ode45(@thickdash,[0,x(i) - x(i-1)],thick0);
         
      thick0(1) = thickhist(end,1);   
      thick0(2) = thickhist(end,2); 
      HE = thick0(2)/thick0(1);
-     Rethet = ReL*ue(i)*thick0(1);
+     Rethet = Re*ue(i)*thick0(1);
      
      Theta(i) = thick0(1);
      He(i) = HE;
@@ -127,7 +109,10 @@ if its ~= 0
     end
 end
 
-figure(2)
-plot(x,Theta)
-figure(3)
-plot(x,He)
+theta = Theta; 
+delstar = He.*Theta;
+
+% figure(2)
+% plot(x,Theta)
+% figure(3)
+% plot(x,He)

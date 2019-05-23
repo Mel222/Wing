@@ -27,11 +27,22 @@ for i=1:np
 end
 
 
+lhsmat(np,:)=0;
+lhsmat(np,1) = 2;
+lhsmat(np,2) = -2;
+lhsmat(np,3) = 1;
+lhsmat(np,np-1) = -1;
+lhsmat(np,np) = 2;
+
+% lhsmat(np,:)=0;
+% lhsmat(np,1) = 1;
+
 lhsmat(np+1,:)=0;
+lhsmat(np+1,1)=1;
 lhsmat(np+1,np+1)=1;
 
-lhsmat(np,:)=0;
-lhsmat(np,1)=1;
+% lhsmat(np+1,:)=0;
+% lhsmat(np+1,np+1)=1;
 
 for i=1:np-1
     for j=1:np+1

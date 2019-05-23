@@ -23,7 +23,7 @@ ue(1) = (1-cp(1))^0.5;
 uegrad1 = ue(1)/x(1);
 duedx = uegrad1;
 integral = integral + ueintbit(0,0,x(1),ue(1)); 
-Mthick = sqrt(0.45*(ue(1)^-6)*integral/Re);
+Mthick = sqrt(0.45*(ue(1)^-6)*integral/Re)
 theta(1)=Mthick;
 Rethet = Re*ue(1)*Mthick;
 m = -Re*(Mthick^2)*uegrad1;
@@ -52,9 +52,10 @@ while laminar && i < n
     uegrad = (ue(i)-ue(i-1))/(x(i)-x(i-1));
     duedx = uegrad;
     
-    integral = integral + ueintbit(x(i-1),ue(i-1),x(i),ue(i)); 
+    integral = integral + ueintbit(x(i-1),ue(i-1),x(i),ue(i))
     Mthick = sqrt(0.45*(ue(i)^-6)*integral/Re);
     theta(i)=Mthick;
+    Mthick;
     
     Rethet = Re*ue(i)*Mthick;
     m = -Re*(Mthick^2)*uegrad;
@@ -92,14 +93,14 @@ while i<length(x) && its==0
     uegrad = (ue(i)-ue(i-1))/(x(i)-x(i-1));
     duedx = uegrad;
     
-    [delx, thickhist] = ode45(@thickdash,[0,x(i) - x(i-1)],thick0);
+    [delx, thickhist] = ode45(@thickdash,[0,(x(i) - x(i-1))],thick0);
         
      thick0(1) = thickhist(end,1);   
      thick0(2) = thickhist(end,2); 
      HE = thick0(2)/thick0(1);
      Rethet = Re*ue(i)*thick0(1);
      
-     theta(i) = thick0(1);
+     theta(i) = thick0(1)
      He(i) = HE;
      
      H=(11*HE+15)/(48*HE-59);
@@ -117,6 +118,8 @@ end
 if its ~= 0
     H = 2.803;
     for i = its:(length(x)-1)
+        ue(i) = (1-cp(i))^0.5;
+        ue(i+1) = (1-cp(i+1))^0.5;
         theta(i+1) = theta(i)*(ue(i)/ue(i+1))^(H+2);
         He(i+1) = HE;
         delstar(i+1)=H*theta(i);
